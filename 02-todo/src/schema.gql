@@ -1,0 +1,53 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AggregationsType {
+  completed: Int!
+  pending: Int!
+  total: Int!
+}
+
+input CreateTodoInput {
+  """The description of the todo"""
+  description: String!
+}
+
+type Mutation {
+  createTodo(data: CreateTodoInput!): Todo!
+  deleteTodo(id: Int!): Boolean!
+  updateTodo(dataUpdate: UpdateTodoInput!): Todo!
+}
+
+type Query {
+  """Devuelve un saludo de bienvenida"""
+  HolaMundo: String!
+  NumberRandom: Float!
+  RandomNumberEntero(to: Int): Int!
+  aggregations: AggregationsType!
+  completeTodos: Int!
+  pendingTodos: Int!
+  todo(id: Int!): Todo!
+  todos(
+    """The status of the todo"""
+    status: Boolean
+  ): [Todo!]!
+  totalTodos: Int!
+}
+
+type Todo {
+  description: String!
+  done: Boolean!
+  id: Int!
+}
+
+input UpdateTodoInput {
+  """The description of the todo"""
+  description: String
+
+  """The status of the todo"""
+  done: Boolean
+
+  """Id de todo"""
+  id: Int!
+}
