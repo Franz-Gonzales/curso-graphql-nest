@@ -1,6 +1,7 @@
 import { Field, InputType } from "@nestjs/graphql";
 import { IsEmail, IsNotEmpty, IsString, MinLength } from "class-validator";
 
+// Input para registro: define y valida los datos requeridos para crear un usuario
 @InputType()
 export class SignupInput {
 
@@ -16,6 +17,6 @@ export class SignupInput {
 
     @Field(() => String)
     @IsString()
-    @MinLength(6)
+    @MinLength(6)       
     password: string;
 }

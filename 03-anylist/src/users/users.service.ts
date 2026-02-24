@@ -16,9 +16,9 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>
-  ) {}
+  ) { }
   async create(signupInput: SignupInput): Promise<User> {
-    try{
+    try {
       const user = this.userRepository.create({
         ...signupInput,
         password: bcrypt.hashSync(signupInput.password, 10)
@@ -38,8 +38,8 @@ export class UsersService {
   }
 
   async findOneByEmail(email: string): Promise<User> {
-    try{
-      return await this.userRepository.findOneByOrFail({email});
+    try {
+      return await this.userRepository.findOneByOrFail({ email });
     } catch (error) {
       this.handleDBError(error);
     }
@@ -56,11 +56,19 @@ export class UsersService {
   private handleDBError(error: any): never {
     this.logger.error(error);
 
-    if(error.code === '23505') {
+    if (error.code === '23505') {
       throw new BadRequestException(error.detail.replace('Key ', ''));
     }
 
 
     throw new InternalServerErrorException('Please check server logs');
+  }
+
+  async findOneById(id: string): Promise<User> {
+    try {
+      return await this.userRepository.findOneByOrFail({ id });
+    } catch (error) {
+      this.handleDBError(error);
+    }
   }
 }
