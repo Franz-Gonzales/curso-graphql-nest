@@ -35,4 +35,10 @@ export class AuthResolver {
     return this.authService.revalidateToken(user);
   }
 
+  @Query(() => User, { name: 'blockUser' })
+  @UseGuards(JwtAuthGuard)
+  async blockUser(@Args('id') @CurrentUser([ValidRoles.admin]) id: string): Promise<User> {
+    return this.authService.blockUser(id);
+  }
+
 }

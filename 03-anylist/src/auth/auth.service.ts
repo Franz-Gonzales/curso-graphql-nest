@@ -69,4 +69,8 @@ export class AuthService {
         }
     }
 
+    blockUser(id: string): Promise<User> {
+        return this.usersService.blockUser(id);
+    }
+
 }

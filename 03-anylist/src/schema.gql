@@ -36,11 +36,12 @@ type Mutation {
 }
 
 type Query {
+  blockUser(id: String!): User!
   item(id: ID!): Item!
   items: [Item!]!
   revalite: AuthResponse!
   user(id: Int!): User!
-  users: [User!]!
+  users(roles: [ValidRoles!] = []): [User!]!
 }
 
 input SignupInput {
@@ -68,4 +69,11 @@ type User {
   id: ID!
   isActive: Boolean!
   roles: [String!]!
+}
+
+"""Valid roles in the system"""
+enum ValidRoles {
+  admin
+  superUser
+  user
 }

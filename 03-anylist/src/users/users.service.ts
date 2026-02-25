@@ -29,12 +29,13 @@ export class UsersService {
     }
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll(): Promise<User[]> {
+    return await this.userRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} user`;
+    // return `This action returns a #${id} user`;
+    throw new BadRequestException(`User with id ${id} not found`);
   }
 
   async findOneByEmail(email: string): Promise<User> {
@@ -68,6 +69,17 @@ export class UsersService {
     try {
       return await this.userRepository.findOneByOrFail({ id });
     } catch (error) {
+      this.handleDBError(error);
+    }
+  }
+
+  async blockUser(id: string): Promise<User> {
+    try{
+      const user = await this.findOneById(id);
+      user.isActive = false;
+      return await this.userRepository.save(user);
+    
+    }catch(error){
       this.handleDBError(error);
     }
   }
